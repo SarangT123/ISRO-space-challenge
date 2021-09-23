@@ -8,7 +8,7 @@ load_dotenv()
 token = os.getenv("keyid")
 views = Blueprint('views', __name__)
 
-HOST = "127.0.0.1:5000"
+HOST = "https://ISRO-space-challenge.c3tmlive.repl.co"
 
 
 def barGraph(datax, datay, title, xl, yl):
@@ -38,7 +38,6 @@ def ip(ip):
     r = requests.get(url)
     j = json.loads(r.text)
     session['city'] = j['city']
-    print(j['city'])
     return redirect(f"/{j['lat']}/{j['lon']}")
 
 
@@ -46,7 +45,7 @@ def ip(ip):
 def weather(lan, lon):
     if request.method == 'POST':
         print(request.form['loc'])
-        return redirect(f"http://{HOST}/{request.form['loc']}")
+        return redirect(f"{HOST}/{request.form['loc']}")
     else:
         print(type(lan), lon)
         r = requests.get(
@@ -58,7 +57,6 @@ def weather(lan, lon):
         #
         #
         #
-        loc = request
         if "city" in session:
             moreinfo = [f"Location : {session['city']}", f"latittude : {info['lat']}",
                         f"lontittude : {info['lon']}",
