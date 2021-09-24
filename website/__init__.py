@@ -7,7 +7,10 @@ def create_app():
 
     # Importing the view and auth .py's
     from .views import views
+    from .forecast import forecast
+
 
     # Registering those blueprints
     app.register_blueprint(views, url_prefix='/')
+    app.register_blueprint(forecast, url_prefix='/')
     return app

@@ -1,0 +1,37 @@
+{%extends 'base.html'%}
+{%block script1%}{%endblock%}
+{%block title%} Current weather {%endblock%}
+{%block contents%}
+<h1 class="text-center">Welcome</h1>
+<br>
+  <form action="" method="POST">
+    <div class="row g-3 align-items-center">
+      <div class="col-auto">
+        <label for="inputPassword6" class="col-form-label">City</label>
+      </div>
+      <div class="col-auto">
+        <input type="text" placeholder="Enter the name of the city" class="form-control" aria-describedby="passwordHelpInline" name="loc" id="loc">
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </div>
+    </form>
+<br>
+<div class="card" style="width: 100rem;">
+  <img src="/static/mygraph.png" class="card-img-top" alt="...">
+  <div class="card-body">
+    {%with f = main%}
+    {%for i in range(f|length-1)%}
+    <h1 class="card-title">{{main[i+1]}}</h5>
+    <h2 class="card-text">Weather : {{weather[i+1]}}</p>
+    <h2 class="card-text">Temparature (celcius) : {{temp[i+1]}}</p>
+    {%endfor%}
+    {%endwith%}
+    <br>
+  </div>
+</div>
+</div>
+{%endblock%}
+
+{%block script2%}{%endblock%}
