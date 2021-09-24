@@ -4,6 +4,8 @@
 {%block contents%}
 <h1 class="text-center">Welcome</h1>
 <br>
+
+    <div class="d-flex justify-content-center">
   <form action="" method="POST">
     <div class="row g-3 align-items-center">
       <div class="col-auto">
@@ -17,21 +19,31 @@
       </div>
     </div>
     </form>
+    </div>
 <br>
-<div class="card" style="width: 100rem;">
-  <img src="/static/mygraph.png" class="card-img-top" alt="...">
-  <div class="card-body">
+<div class="d-flex justify-content-center">
+<div class="card-group">
     {%with f = main%}
-    {%for i in range(f|length-1)%}
-    <h1 class="card-title">{{main[i+1]}}</h5>
-    <h2 class="card-text">Weather : {{weather[i+1]}}</p>
-    <h2 class="card-text">Temparature (celcius) : {{temp[i+1]}}</p>
-    {%endfor%}
-    {%endwith%}
+    {%for i in range(f|length)%}
+<div class="card" style="width: 30rem;">
+  <img src="/static/mygraphl.png" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h4 class="text-center card-title">{{main[i]}}</h4>
+    <br>
+    <p class="text-center card-text">Weather : {{weather[i]}}</p>
+    <br>
+    
+    <p class="text-center card-text">Temparature (celcius) : {{temp[i]}}</p>
+    <br>
+    <br>
     <br>
   </div>
+  </div>
+    {%endfor%}
+    {%endwith%}
 </div>
 </div>
+
 {%endblock%}
 
 {%block script2%}{%endblock%}

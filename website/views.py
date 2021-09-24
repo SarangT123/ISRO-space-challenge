@@ -27,10 +27,12 @@ def barGraph(datax, datay, title, xl, yl):
     plt.savefig('website/static/mygraph.png')
 
 
-@views.route('/')
+@views.route('/weather')
 def home():
     return render_template('ipcheck.html')
-
+@views.route('/')
+def main():
+    return render_template('land.html')
 
 @views.route('/ip/<ip>')
 def ip(ip):
@@ -38,6 +40,7 @@ def ip(ip):
     r = requests.get(url)
     j = json.loads(r.text)
     session['city'] = j['city']
+    print(j['city'],ip)
     return redirect(f"/{j['lat']}/{j['lon']}")
 
 
@@ -51,6 +54,7 @@ def weather(lan, lon):
         r = requests.get(
             f"https://api.openweathermap.org/data/2.5/onecall?lat={float(lan)}&lon={float(lon)}&exclude=hourly,daily&appid={token}")
         info = json.loads(r.text)
+        print(info)
         main = info["current"]["weather"][0]["main"]
         desc = info["current"]["weather"][0]["description"]
         print(main, desc)
