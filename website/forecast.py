@@ -46,7 +46,7 @@ def city(city):
         return redirect(f"https://ISRO-space-challenge.c3tmlive.repl.co/forecast/{request.form['loc']}")
     data = forecast_week(city)
     if data[0] == "":
-        return "<h1>Your city isnt available on our databse yet</h1>"
+        return render_template('500notindbw.html')
     print("data",data)
     weather = data[2].split('#')
     weather.pop(0)
@@ -63,8 +63,8 @@ def city(city):
     for i in range(len(temp)):
         graphdate.append(dates[i].split(' ')[0])
     print(len(temp), len(graphdate))
-    Graph(graphdate,temp,"Temparature graph", "Dates", "Temparature in celcius")
-    return render_template('forecast.html', main=graphdate,weather=weather,temp=temp)
+    Graph(graphdate,temp,"Temperature graph", "Dates", "Temperature in celcius")
+    return render_template('forecast.html', main=graphdate,weather=weather,temp=temp, city=city)
 
 @forecast.route('/ip/forecast/<ip>')
 def ip(ip):
@@ -73,3 +73,7 @@ def ip(ip):
     j = json.loads(r.text)
     session['city'] = j['city']
     return redirect(f"/forecast/{j['city']}")
+
+@forecast.errorhandler(404)
+def page_not_found(e):
+    return render_template('404 forecast.html'), 404

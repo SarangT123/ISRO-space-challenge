@@ -2,11 +2,80 @@
 {%block script1%}{%endblock%}
 {%block title%} checking location {%endblock%}
 {%block contents%}
+<style>
+    body {
+	padding: 0;
+	margin: 0;
+	width: 100vw;
+	height: 100vh;
+	background: #191e27;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+h1{
+    color: white;
+}
+h2{
+    color: white;
+}
+
+.loadingOuter {
+	position: relative;
+	width: 256px;
+	height: 4px;
+	background: rgba(255, 255, 255, 0.2);
+}
+
+.loadingInner {
+	position: absolute;
+	width: 0px;
+	height: 4px;
+	left: 0px;
+	background: rgba(255, 255, 255, 0.2);
+	animation: 2s infinite linear loadingAnimation;
+}
+
+@keyframes loadingAnimation {
+	0% {
+		left: 0px;
+		width: 0px;
+	}
+	
+	25% {
+		left: 0px;
+		width: 100px;
+	}
+	
+	70% {
+		left: 200px;
+		width: 56px;
+	}
+	
+	90% {
+		left: 256px;
+		width: 0px;
+	}
+}
+</style>
 <div class="container">
-    <div class="row justify-content-center">
-<h1 class="text-center">Checking you data If this doesnt load for a long time your browser may have some issues</h1>
+    <div class="row">
+    <div class="row g-3 align-items-center">
+        <div class="loadingOuter">
+            <div class="loadingInner"></div>
+        </div>
+    </div>
+    </div>
+    <div class="row">
+    <div class="row g-3 align-items-center">
+
+        <h1>Loading.. This may take a while</h1>
+        <h2>Disable your adblocker if it takes too long</h2>
+    </div>
+    </div>
 </div>
-</div>
+
+<!--  -->
 <script src=
 "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
 </script>

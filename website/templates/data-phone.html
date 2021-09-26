@@ -1,0 +1,51 @@
+{%extends 'base.html'%}
+{%block script1%}{%endblock%}
+{%block title%} Current weather {%endblock%}
+{%block contents%}
+<h1 class="text-center">Welcome</h1>
+<br>
+
+
+<div class="container">
+<div class="row">
+  <form action="" method="POST">
+    <div class="row g-3 align-items-center">
+      <div class="col-auto">
+        <label for="inputPassword6" class="col-form-label">coordinates</label>
+      </div>
+      <div class="col-auto">
+        <input type="text" placeholder="Spearate with slashes eg:lat/lon" class="form-control" aria-describedby="passwordHelpInline" name="loc" id="loc">
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </div>
+    </form>
+</div>
+<br>
+<div class="row">
+<div class="card" style="width: 35rem;">
+  <img src="/static/mygraph.png" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">{{main}}</h5>
+    <p class="card-text">{{desc}}</p>
+    <br>
+    <h5 class="card-title">More info</h5>
+    <p class="card-text">Location : {{loc}}</p>
+    
+    {%with f = info%}
+    {%for i in range(f|length)%}
+    <p class="card-text">{{f[i]}}</p>
+    {%endfor%}
+    {%endwith%}
+  </div>
+</div>
+<div class="row">
+<iframe width="450" height="450" src="https://embed.windy.com/embed2.html?lat=11.867&lon=94.746&detailLat=11.243&detailLon=75.762&width=650&height=450&zoom=4&level=surface&overlay=wind&product=ecmwf&menu=&message=&marker=&calendar=now&pressure=&type=map&location=coordinates&detail=&metricWind=default&metricTemp=default&radarRange=-1" frameborder="0"></iframe>
+<!-- 792 -->
+</div>
+</div>
+</div>
+{%endblock%}
+
+{%block script2%}{%endblock%}

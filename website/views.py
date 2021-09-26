@@ -41,14 +41,24 @@ def ip(ip):
     j = json.loads(r.text)
     session['city'] = j['city']
     print(j['city'],ip)
-    return redirect(f"/{j['lat']}/{j['lon']}")
+    return redirect(f"/{j['lat']}/{j['lon']}/{j['city']}")
 
 
+@views.route('/<lan>/<lon>/<location>', methods=['POST', 'GET'])
 @views.route('/<lan>/<lon>', methods=['POST', 'GET'])
-def weather(lan, lon):
+def weather_phone(lan, lon,location="NA"):
     if request.method == 'POST':
-        print(request.form['loc'])
-        return redirect(f"{HOST}/{request.form['loc']}")
+        r = requests.get(f"https://nominatim.openstreetmap.org/search?q={request.form['loc']}&format=json")
+        print(r.text)
+        r = json.loads(r.text)
+        print(r)
+        try:
+            lat = r[0]['lat']
+            lon = r[0]['lon']
+        except:
+            return render_template('500notindb.html')
+        return redirect(f'/{lat}/{lon}/{request.form["loc"]}')
+            
     else:
         print(type(lan), lon)
         r = requests.get(
@@ -62,19 +72,19 @@ def weather(lan, lon):
         #
         #
         if "city" in session:
-            moreinfo = [f"Location : {session['city']}", f"latittude : {info['lat']}",
-                        f"lontittude : {info['lon']}",
+            moreinfo = [f"Location : {session['city']}", f"latitude : {info['lat']}",
+                        f"longitude : {info['lon']}",
                         f"timezone : {info['timezone']}",
-                        f"temp : {info['current']['temp']}",
+                        f"temperature (Kelvin) : {info['current']['temp']}",
                         f"pressure : {info['current']['pressure']}",
                         f"humidity : {info['current']['humidity']}",
                         f"wind speed : {info['current']['wind_speed']}"]
             session.pop('city')
         else:
-            moreinfo = [f"latittude : {info['lat']}",
-                        f"lontittude : {info['lon']}",
+            moreinfo = [f"latitude : {info['lat']}",
+                        f"longitude : {info['lon']}",
                         f"timezone : {info['timezone']}",
-                        f"temp : {info['current']['temp']}",
+                        f"temperature (Kelvin) : {info['current']['temp']}",
                         f"pressure : {info['current']['pressure']}",
                         f"humidity : {info['current']['humidity']}",
                         f"wind speed : {info['current']['wind_speed']}"]
@@ -87,4 +97,5 @@ def weather(lan, lon):
         x = ["temp", "pressure", "humidity", "wind speed"]
 
         barGraph(x, y, "Information in a single graph", "Items", "Value")
-        return render_template("data.html", main=main, desc=desc, info=moreinfo)
+        return render_template("data.html", main=main, desc=desc, info=moreinfo, loc = location)
+
